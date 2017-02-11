@@ -24,8 +24,8 @@ define(['Class', 'ImageLoader', 'SpriteSheet'], function (Class, ImageLoader, Sp
     var terrain = new Assets("terrain","res/sprites/terrain.png",32,32);
     terrain.b01 = terrain.sheet.crop(12*32,18*32,32,32);
     
-    var ast = new Assets("name","res/sprites/sprite.png",28,42);
-    ast.idle = ast.sheet.crop(3,0,64,64);
+    var ast = new Assets("hero","res/sprites/sprite2.png",64,64);
+    ast.idle = ast.sheet.crop(0,0,432,416);
 
     return Assets;
 

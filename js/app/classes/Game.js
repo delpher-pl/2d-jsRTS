@@ -1,9 +1,10 @@
-define(['Class','Display','State','GameState'],function(Class,Display,State,GameState){
+define(['Class','Display','State','GameState','KeyManager','Handler'],function(Class,Display,State,GameState,KeyManager,Handler){
 
     var _this;
     var isRunning = false;
-    var title, width, height, g, display;
+    var title, width, height, g, display, keyManager, handler;
     var gameState, menuState, settingsState;
+
 
     var Game = Class.extend({
         init: function(_title, _width, _height){
@@ -11,17 +12,20 @@ define(['Class','Display','State','GameState'],function(Class,Display,State,Game
             title = _title;
             width = _width;
             height = _height;
+            keyManager = new KeyManager();
         }
     });
 
     function init(){
         display = new Display(title, width, height);
         g = display.getCtx();
-        gameState = new GameState();
+        handler = new Handler(_this);
+        gameState = new GameState(handler);
         State.setState(gameState);
     }
 
     function tick(_dt){
+        keyManager.tick();
         if(State.getState() !== null){
             State.getState().tick(_dt);
         }
@@ -39,7 +43,7 @@ define(['Class','Display','State','GameState'],function(Class,Display,State,Game
 
     Game.prototype.run = function(){
         init();
-        var fps = 30;
+        var fps = 50;
         var timePerTick = 1000/fps;
         var delta = 0;
         var now;
@@ -68,6 +72,18 @@ define(['Class','Display','State','GameState'],function(Class,Display,State,Game
         if(isRunning) return;
         isRunning = true;
         this.run();
+    };
+
+    Game.prototype.getKeyManager = function(){
+        return keyManager;
+    };
+    
+    Game.prototype.getWidth = function(){
+        return width;
+    };
+
+    Game.prototype.getHeight = function(){
+        return height;
     };
 
     return Game;
