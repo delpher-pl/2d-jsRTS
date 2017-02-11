@@ -7,7 +7,7 @@ define(['Jquery','Class'], function($, Class) {
 
             title = _title;
             width = _width;
-            height= _height;
+            height = _height;
             createDisplay();
 
         }
@@ -41,6 +41,11 @@ define(['Jquery','Class'], function($, Class) {
 
     Display.prototype.getCtx = function(){
         return ctx;
+    };
+
+
+    CanvasRenderingContext2D.prototype.myDrawImage = function(asset,_x,_y,_width,_height){
+        this.drawImage(asset.sheet, asset.x, asset.y, asset.width, asset.height, _x, _y, _width, _height);
     };
 
     return Display;

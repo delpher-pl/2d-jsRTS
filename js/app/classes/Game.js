@@ -1,8 +1,14 @@
-define(['Class','Display'],function(Class,Display){
+define(['Class','Display','Assets'],function(Class,Display,Assets){
 
     var _this;
     var isRunning = false;
     var title, width, height, g, display;
+
+    var ast = new Assets("Test","res/sprites/sprite.png", null, null);
+    var img2 = ast.sheet.crop(64,64,256,512);
+
+    var img = new Image();
+    img.src = "res/sprites/sprite.png";
 
     var Game = Class.extend({
         init: function(_title, _width, _height){
@@ -17,19 +23,16 @@ define(['Class','Display'],function(Class,Display){
         display = new Display(title, width, height);
         g = display.getCtx();
     }
-    var x = 20;
-    var y = 30;
+
     function tick(_td){
-        console.log(_td);
-        x += 20 * _td;
-        y += 30 * _td;
+
+
     }
 
     function render(){
         g.clearRect(0,0,width,height);
-        //g.fillStyle = "#333333";
-        g.fillRect(x,y,200,50);
-        //g.fill();
+        g.drawImage(img,10,10,64,64);
+        g.myDrawImage(img2,80,80,32,32);
     }
 
     Game.prototype.run = function(){
